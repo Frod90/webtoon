@@ -7,7 +7,6 @@ public class ReviewForm {
 	private String webtoonID;
 	private String userID;
 
-
 	public ReviewForm(String webtoonID, String userID, String content, String title) {
 		this.webtoonID = webtoonID;
 		this.userID = userID;

@@ -1,7 +1,5 @@
 package org.example.webtoon;
 
-import javax.sql.DataSource;
-
 import org.example.webtoon.repository.MemberRepository;
 import org.example.webtoon.repository.ReviewRepository;
 import org.example.webtoon.repository.WebtoonRepository;
@@ -43,7 +41,6 @@ public class SpringConfig {
 	public WebtoonRepository webtoonRepository() {
 		return new WebtoonRepository(em);
 	}
-
 
 	@Bean
 	public ReviewService reviewService() {

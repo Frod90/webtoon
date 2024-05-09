@@ -4,9 +4,7 @@ import java.util.List;
 
 import org.example.webtoon.domain.Member;
 import org.example.webtoon.domain.Review;
-import org.example.webtoon.domain.Webtoon;
 import org.example.webtoon.service.ReviewService;
-import org.example.webtoon.service.WebtoonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -59,7 +57,7 @@ public class ReviewController {
 
 		Member loginMember = (Member)session.getAttribute("login");
 
-		if(loginMember == null || loginMember.getId().isBlank()) {
+		if (loginMember == null || loginMember.getId().isBlank()) {
 			return "/member/login";
 		}
 

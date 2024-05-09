@@ -16,10 +16,6 @@ public class MemberService {
 		this.memberRepository = memberRepository;
 	}
 
-	/*
-	 * 회원 가입
-	 */
-
 	public void join(Member member) {
 
 		validateDuplicateMember(member);
