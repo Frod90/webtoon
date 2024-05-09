@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Webtoon</title>
+</head>
+<body>
+
+<h1></h1>
+
+<div>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>title</th>
+            <th>content</th>
+            <th>userID</th>
+            <th>webtoonID</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="inquiry : ${inquirys}">
+            <td th:text="${inquiry.ID}">id</td>
+            <td th:text="${inquiry.title}">title</td>
+            <td th:text="${inquiry.content}">content</td>
+            <td th:text="${inquiry.userID}">userID</td>
+            <td th:text="${inquiry.webtoonID}">webtoonID</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
