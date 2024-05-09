@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Webtoon</title>
+</head>
+<body>
+<div>
+    <table>
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="webtoon : ${webtoons}">
+
+            <td th:text="${webtoon.title}"></td>
+            <td th:text="${webtoon.author}"></td>
+            <td th:text="${webtoon.webtoonID}"></td>
+            <td>
+                <form action="/review/inquiry" method="post">
+                    <input type="hidden" name="webtoonID" th:value="${webtoon.webtoonID}">
+                    <button type="submit">
+                        조회
+                    </button>
+                </form>
+            </td>
+            <td>
+                <form action="/review/enroll" method="post">
+                    <input type="hidden" name="webtoonID" th:value="${webtoon.webtoonID}">
+                    <button type="submit">
+                        작성
+                    </button>
+                </form>
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
