@@ -1,5 +1,7 @@
 package org.example.webtoon.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Optional;
 
 import org.example.webtoon.domain.Member;
@@ -10,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -53,12 +57,17 @@ public class MemberController {
 	}
 
 	@PostMapping("/member/login")
-	public String login(MemberForm form, HttpSession session, Model model) {
+	public String login(MemberForm form, HttpSession session, Model model, HttpServletResponse response) throws
+		IOException {
 
 		Optional<Member> login = memberService.login(form.getId(), form.getPwd());
 
 		if (login.isEmpty()) {
-			return "redirect:/member/login";
+
+			PrintWriter writer = response.getWriter();
+			writer.println("<script> alert(\"아이디와 비밀번호를 확인해주세요.\") </script>");
+
+			return "/member/login";
 		}
 
 		Member loginMember = login.get();
