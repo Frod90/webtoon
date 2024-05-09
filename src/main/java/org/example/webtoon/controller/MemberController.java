@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletResponse;
@@ -43,7 +45,7 @@ public class MemberController {
 		return "redirect:/";
 	}
 
-	@GetMapping("/member/login")
+	@GetMapping("/member/loginProcessor")
 	public String loginForm(HttpSession session) {
 
 		Optional<Member> member = Optional.ofNullable((Member)session.getAttribute("login"));
@@ -54,6 +56,11 @@ public class MemberController {
 
 		return "member/logout";
 
+	}
+
+	@GetMapping("/member/login")
+	public String login() {
+		return "/member/login";
 	}
 
 	@PostMapping("/member/login")
@@ -79,8 +86,15 @@ public class MemberController {
 
 	@GetMapping("/member/logout")
 	public String logoutForm() {
-
 		return "member/logout";
 	}
 
+	@GetMapping("/member/doLogout")
+	public String logout(@RequestParam("logout") String logout,HttpSession session) {
+
+		if(logout.equals("logout")) {
+			session.invalidate();
+		}
+		return "redirect:/";
+	}
 }
