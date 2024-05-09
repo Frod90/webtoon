@@ -20,6 +20,6 @@
   + [ ] 리뷰 개체는 글번호, 글제목, 글내용을 속성으로 가진다.
   + [ ] 리뷰 개체는 글번호로 식별한다.
 
-![img_2.png](img_2.png)
+![img_2.png](docs/img_2.png)
 
-![img_3.png](img_3.png)
+![img_3.png](docs/img_3.png)
