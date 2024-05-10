@@ -31,8 +31,6 @@ public class WebtoonController {
 		List<Webtoon> webtoons = findWebtoon(form);
 		model.addAttribute("webtoons", webtoons);
 
-		System.out.println(webtoons.get(0).getWebtoonID());
-
 		return "/webtoon/list";
 	}
 
