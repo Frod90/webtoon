@@ -34,6 +34,7 @@ public class MemberController {
 	@PostMapping("/member/new")
 	public String create(MemberForm form, HttpServletResponse response) throws IOException {
 		Member member = new Member();
+		// setter getter 사용하는 것에 DTO 객체는 예외로 둬도 되는가?
 		member.setId(form.getId());
 		member.setPwd(form.getPwd());
 		member.setName(form.getName());
@@ -43,6 +44,7 @@ public class MemberController {
 		} catch (IllegalArgumentException ill) {
 
 			PrintWriter writer = response.getWriter();
+			// 여기에 뷰로직이 있는게 맞는 것인가??
 			writer.println("<script> alert(\"" + ill.getMessage() + "\") </script>");
 		}
 
@@ -71,30 +73,19 @@ public class MemberController {
 	public String login(MemberForm form, HttpSession session, Model model, HttpServletResponse response) throws
 		IOException {
 
-		Optional<Member> login = Optional.empty();
-
 		try {
-			login = memberService.login(form.getId(), form.getPwd());
+			Optional<Member> login = memberService.login(form.getId(), form.getPwd());
+			Member loginMember = login.orElseThrow(() -> new IllegalArgumentException("아이디와 비밀번호를 확인해주세요."));
+			session.setAttribute("login", loginMember);
+			model.addAttribute("loginMember", loginMember);
+
 		} catch (IllegalArgumentException ill) {
-
 			PrintWriter writer = response.getWriter();
-			writer.println("<script> alert(\"" + ill.getMessage() + "\") </script>");
-		}
-
-
-		if (login.isEmpty()) {
-
-			PrintWriter writer = response.getWriter();
-			writer.println("<script> alert(\"아이디와 비밀번호를 확인해주세요.\") </script>");
-
+			writer.println("<script> alert(\"" + ill.getMessage() + "\"); </script>");
 			return "/member/login";
 		}
 
-		Member loginMember = login.get();
-		session.setAttribute("login", loginMember);
-		model.addAttribute("loginMember", loginMember);
-
-		return "redirect:/";
+		return "/home";
 	}
 
 	@GetMapping("/member/logout")
