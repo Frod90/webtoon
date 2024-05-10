@@ -105,9 +105,7 @@ public class MemberController {
 	@GetMapping("/member/doLogout")
 	public String logout(@RequestParam("logout") String logout, HttpSession session) {
 
-		if (logout.equals("logout")) {
-			session.invalidate();
-		}
+		memberService.logout(logout, session);
 		return "redirect:/";
 	}
 }

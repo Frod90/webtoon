@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.example.webtoon.domain.Member;
 import org.example.webtoon.repository.MemberRepository;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 
 @Transactional
@@ -48,6 +49,13 @@ public class MemberService {
 		}
 
 		return Optional.empty();
+	}
+
+	public void logout(String logout, HttpSession session) {
+
+		if (logout.equals("logout")) {
+			session.invalidate();
+		}
 	}
 
 }
