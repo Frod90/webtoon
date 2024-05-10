@@ -41,14 +41,15 @@ public class MemberController {
 
 		try {
 			memberService.join(member);
-		} catch (IllegalArgumentException ill) {
+		} catch (IllegalArgumentException | IllegalStateException ill) {
 
 			PrintWriter writer = response.getWriter();
 			// 여기에 뷰로직이 있는게 맞는 것인가??
-			writer.println("<script> alert(\"" + ill.getMessage() + "\") </script>");
+			writer.println("<script> alert(\"" + ill.getMessage() + "\"); </script>");
+			return "member/createMemberForm";
 		}
 
-		return "redirect:/";
+		return "/home";
 	}
 
 	@GetMapping("/member/loginProcessor")
