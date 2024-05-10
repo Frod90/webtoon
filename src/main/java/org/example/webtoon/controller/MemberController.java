@@ -10,11 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
@@ -34,13 +32,19 @@ public class MemberController {
 	}
 
 	@PostMapping("/member/new")
-	public String create(MemberForm form) {
+	public String create(MemberForm form, HttpServletResponse response) throws IOException {
 		Member member = new Member();
 		member.setId(form.getId());
 		member.setPwd(form.getPwd());
 		member.setName(form.getName());
 
-		memberService.join(member);
+		try {
+			memberService.join(member);
+		} catch (IllegalArgumentException ill) {
+
+			PrintWriter writer = response.getWriter();
+			writer.println("<script> alert(\"" + ill.getMessage() + "\") </script>");
+		}
 
 		return "redirect:/";
 	}
@@ -67,7 +71,16 @@ public class MemberController {
 	public String login(MemberForm form, HttpSession session, Model model, HttpServletResponse response) throws
 		IOException {
 
-		Optional<Member> login = memberService.login(form.getId(), form.getPwd());
+		Optional<Member> login = Optional.empty();
+
+		try {
+			login = memberService.login(form.getId(), form.getPwd());
+		} catch (IllegalArgumentException ill) {
+
+			PrintWriter writer = response.getWriter();
+			writer.println("<script> alert(\"" + ill.getMessage() + "\") </script>");
+		}
+
 
 		if (login.isEmpty()) {
 
@@ -90,9 +103,9 @@ public class MemberController {
 	}
 
 	@GetMapping("/member/doLogout")
-	public String logout(@RequestParam("logout") String logout,HttpSession session) {
+	public String logout(@RequestParam("logout") String logout, HttpSession session) {
 
-		if(logout.equals("logout")) {
+		if (logout.equals("logout")) {
 			session.invalidate();
 		}
 		return "redirect:/";
