@@ -34,7 +34,6 @@ public class MemberController {
 	@PostMapping("/member/new")
 	public String create(MemberForm form, HttpServletResponse response) throws IOException {
 		Member member = new Member();
-		// setter getter 사용하는 것에 DTO 객체는 예외로 둬도 되는가?
 		member.setId(form.getId());
 		member.setPwd(form.getPwd());
 		member.setName(form.getName());
