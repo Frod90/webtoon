@@ -33,15 +33,6 @@ public class ReviewController {
 	public String inquiry(@RequestParam("webtoonID") String webtoonID, Model model) {
 
 		List<Review> inquirys = reviewService.findByWebtoonID(webtoonID);
-
-		for (Review review : inquirys) {
-			System.out.println("inquiry - " + review.getID());
-			System.out.println("inquiry - " + review.getTitle());
-			System.out.println("inquiry - " + review.getContent());
-			System.out.println("inquiry - " + review.getUserID());
-			System.out.println("inquiry - " + review.getWebtoonID());
-		}
-
 		model.addAttribute("inquirys", inquirys);
 
 		return "/review/inquiry";
@@ -60,9 +51,6 @@ public class ReviewController {
 		if (loginMember == null || loginMember.getId().isBlank()) {
 			return "/member/login";
 		}
-
-		System.out.println("login: " + loginMember.getId());
-		System.out.println("webtoonID : " + webtoonID);
 
 		Review enroll = new Review();
 		enroll.setWebtoonID(webtoonID);
